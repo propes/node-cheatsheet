@@ -74,7 +74,7 @@ emitter.emit('messageLogged');
 
 ### NPM
 
-```js
+```sh
 npm list // list all packages
 npm list --depth=0 // list only direct dependencies
 npm view lodash // view package info
@@ -158,7 +158,7 @@ app.listen(3000, () => console.log('Listening on port 3000...'));
 ### MongoDB
 
 term:
-```js
+```sh
 npm i mongoose
 ```
 
