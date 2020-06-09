@@ -101,6 +101,63 @@ const port = process.env.PORT || 3000;
 ```
 
 
+### Config
+Package options:
+- rc
+- config
+
+Setup:
+```
+npm i config
+```
+
+Folder structure in project:
+```
+config
+├── default.json
+├── development.json
+├── production.json
+└── custom-environment-variables.json
+```
+
+development.json:
+```json
+{
+  "name": "My App - Development",
+  "mail": {
+    "host": "dev-mail-server"
+  }
+}
+```
+
+Setting the node env:
+```sh
+export NODE_ENV=development
+```
+
+Map to environment variables using 'custom-environment-variables.json':
+```json
+{
+  "jwtPrivateKey": "appName_jwtPrivateKey" // Key is as appears in config files, value is the name of the environment variable
+}
+```
+
+Getting config values:
+```js
+const config = require('config');
+
+config.get('jwtPrivateKey');
+```
+
+If using an environment variable, have a catch in index.js:
+```js
+if (config.get('jwtPrivateKey')) {
+  console.error("FATAL ERROR: jwtPrivateKey is not defined.")
+  process.exit(1);
+}
+```
+
+
 ### Arrays - Sorting
 
 ```js
@@ -540,10 +597,10 @@ mongoose.Types.ObjectId.isValid('1234');
 const bcrypt = require('bcrypt');
 
 async function run() {
-   const salt = await bcrypt.genSalt(10);
-   const hashed = await bcrypt.hash('1234', salt);
-   console.log(salt);
-   console.log(hashed);
+  const salt = await bcrypt.genSalt(10);
+  const hashed = await bcrypt.hash('1234', salt);
+  console.log(salt);
+  console.log(hashed);
 }
 run();
 ```
