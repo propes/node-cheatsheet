@@ -609,3 +609,32 @@ async function run() {
 }
 run();
 ```
+
+
+### JSON Web Tokens (jwt)
+Setup:
+```sh
+npm i jsonwebtoken
+```
+
+Code:
+```js
+const jwt = require('jsonwebtoken');
+
+const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'));
+
+// Send with response
+res.header('x-auth-token', token).send(...);
+
+// Get from request
+const token = req.header('x-auth-token');
+if (!token) res.status(401).send('Access denied.No token provided.');
+
+try {
+  const decoded = jwt.verify(token, confg.get('jwtPrivateKey')); // throws exception if token is not valid
+  req.user = decoded;
+}
+catch (ex) {
+  res.status(400).send('Invalid token.');
+}
+```
