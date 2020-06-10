@@ -235,6 +235,11 @@ const courseSchema = new mongoose.Schema({
   isPublished: Boolean
 });
 
+// Adding a method to the schema
+courseSchema.methods.returnSomething = function() {
+  ...
+}
+
 
 async function createCourse() {
   const Course = mongoose.model('course', courseSchema); // Course is a class. First arg is the name of the collection in MongoDB (should be singular even if collection name is plural in db).
