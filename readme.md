@@ -638,3 +638,49 @@ catch (ex) {
   res.status(400).send('Invalid token.');
 }
 ```
+
+
+### Logging
+Setup:
+```sh
+npm i winston
+```
+
+Code:
+```js
+const winston = require('winston');
+
+winston.add(winston.transports.File, { filename: 'logfile.log' });
+// Built transports for Console, File, Http. Plugins available for MongoDB, CouchDB, redis, loggly.
+
+winston.log('error', err.message, err); //or
+winston.error(err.message, err); // Second arg is metadata
+
+// Logging levels:
+// - error
+// - warn
+// - info
+// - verbose
+// - debug
+// - silly
+
+// Manually throwing an error for testing:
+throw new Error('Something went wrong'); // Error object includes stack trace
+```
+
+Logging to MongoDB:
+Setup:
+```sh
+npm i winston-mongodb
+```
+
+Code:
+```js
+winston.add(winston.transports.MongoDB, { db: config.get('dbConnectionString') });
+
+// Log only specified levels to db
+winston.add(winston.transports.MongoDB, {
+  db: config.get('dbConnectionString'),
+  level: 'info' // Means everything above and including 'info' is logged (i.e. error, warn, info)
+});
+```
