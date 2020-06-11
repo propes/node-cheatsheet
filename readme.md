@@ -684,3 +684,25 @@ winston.add(winston.transports.MongoDB, {
   level: 'info' // Means everything above and including 'info' is logged (i.e. error, warn, info)
 });
 ```
+
+
+### Handling Uncaught Exceptions
+```js
+// For synchronous exceptions
+process.on('uncaughtException', (ex) => {
+  winston.error(ex.message, ex);
+  process.exit(1);
+});
+
+// Better alternative
+winston.handleExceptions(new winston.transports.File({ filename: 'uncaughtExceptions.log' }));
+
+// For unhandled promises
+process.on('unhandledRejection', (ex) => {
+  winston.error(ex.message, ex);
+  process.exit(1);
+
+  // Or just
+  throw ex // If using winston to handle uncaught exceptions
+});
+```
